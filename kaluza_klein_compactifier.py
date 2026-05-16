@@ -7,12 +7,8 @@ def simulate_kaluza_klein():
     print("================================================================================")
     
     alpha_prime = 1.0
-    
-    # Tester deux rayons duaux pour démontrer la symétrie T-Dualité
     R_values = [2.0, 0.5] 
     
-    # Sélection de quelques états quantiques (m, n) à analyser
-    # m = impulsion, n = enroulement
     states = [
         (1, 0, "Pure Momentum"),
         (0, 1, "Pure Winding"),
@@ -27,16 +23,10 @@ def simulate_kaluza_klein():
         print("-" * 85)
         
         for m, n, label in states:
-            # Contribution de la quantité de mouvement sur le cercle
             m2_momentum = (m ** 2) / (R ** 2)
-            
-            # Contribution de l'enroulement géométrique de la corde
             m2_winding = (n ** 2) * (R ** 2) / (alpha_prime ** 2)
-            
-            # Masse totale (hors oscillateurs pour isoler la géométrie pure)
             m2_total = m2_momentum + m2_winding
             
-            # Correction de la syntaxe d'alignement ici
             state_str = f"({m}, {n})"
             print(f"{state_str:<15} | {label:<18} | {m2_momentum:<13.4f} | {m2_winding:<12.4f} | {m2_total:.4f}")
             
