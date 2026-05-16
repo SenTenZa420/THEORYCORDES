@@ -1,0 +1,58 @@
+[
+    {
+        "timestamp_utc": "2026-05-16T15:43:58.734634Z",
+        "julian_date_tt": 2461177.156342,
+        "status": "SUCCESS",
+        "gravity_ugalk": 137.830616,
+        "schumann_amp_78": 0.84839
+    },
+    {
+        "timestamp_utc": "2026-05-16T15:46:03.199515Z",
+        "julian_date_tt": 2461177.157782,
+        "status": "SUCCESS",
+        "gravity_ugalk": 138.488551,
+        "schumann_amp_78": 0.850768
+    },
+    {
+        "timestamp_utc": "2026-05-16T15:52:34.757771Z",
+        "julian_date_tt": 2461177.162314,
+        "gravity_ugalk": 139.407696,
+        "schumann_amp_78": 0.854823,
+        "status": "SUCCESS"
+    },
+    {
+        "timestamp_utc": "2026-05-16T16:03:14.259741Z",
+        "julian_date_tt": 2461177.169716,
+        "gravity_ugalk": 142.939944,
+        "schumann_amp_78": 0.849493,
+        "status": "SUCCESS"
+    },
+    {
+        "timestamp_utc": "2026-05-16T16:04:15.618937Z",
+        "julian_date_tt": 2461177.170426,
+        "gravity_ugalk": 143.148512,
+        "schumann_amp_78": 0.857914,
+        "status": "SUCCESS"
+    },
+    {
+        "timestamp_utc": "2026-05-16T16:05:16.970176Z",
+        "julian_date_tt": 2461177.171136,
+        "gravity_ugalk": 143.350263,
+        "schumann_amp_78": 0.846627,
+        "status": "SUCCESS"
+    },
+    {
+        "timestamp_utc": "2026-05-16T16:06:18.321234Z",
+        "julian_date_tt": 2461177.171846,
+        "gravity_ugalk": 143.545762,
+        "schumann_amp_78": 0.84456,
+        "status": "SUCCESS"
+    },
+    {
+        "timestamp_utc": "2026-05-16T16:07:19.679927Z",
+        "julian_date_tt": 2461177.172556,
+        "gravity_ugalk": 143.734738,
+        "schumann_amp_78": 0.858419,
+        "status": "SUCCESS"
+    }
+]
