@@ -4,7 +4,7 @@ import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 print("================================================================================")
-print("🔮 RUN CENTRAL V4 : ARCHITECTURE GLOBALE ET LOGGING INTERNE (RNIOG / K.L.I.S.H.)")
+print("🔮 RUN CENTRAL V5 : COUPLAGE GÉOPHYSIQUE ET MOTEUR DE DÉRIVE (RNIOG / K.L.I.S.H.)")
 print("================================================================================")
 
 try:
@@ -15,11 +15,11 @@ try:
     import klish_metrology_translator
     import rniog_orion_matrix
     import rniog_matrix_logger
+    import rniog_correlation_engine
     
     print("[+] Initialisation de la séquence d'audit global unifiée...")
     print("-" * 80)
     
-    # Exécution séquentielle des flux physiques et métrologiques
     rniog_ephemeris_core.run_ephemeris_audit()
     print("\n")
     rniog_gravity_tensor.calculate_gravity_perturbation()
@@ -33,11 +33,15 @@ try:
     rniog_orion_matrix.run_orion_calibration()
     print("\n")
     
-    # Exécution du module d'archivage persistant
+    # Archivage persistant
     rniog_matrix_logger.log_current_matrix()
+    print("\n")
+    
+    # Analyse de la dérive différentielle
+    rniog_correlation_engine.analyze_telemetry_drift()
     
     print("-" * 80)
-    print("[+] Fin de séquence V4 : Alignement et persistance des données validés.")
+    print("[+] Fin de séquence V5 : Alignement, persistance et diagnostic de dérive achevés.")
     print("================================================================================")
 
 except ImportError as e:
