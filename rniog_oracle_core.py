@@ -1,10 +1,12 @@
 import sys
 import os
+import re
+import io
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 print("================================================================================")
-print("🔮 RUN CENTRAL V7 : ACQUISITION PHYSIQUE DYNAMIQUE DIRECTE (RNIOG / K.L.I.S.H.)")
+print("🔮 RUN CENTRAL V8 : INTERCEPTION INTERNE DU STDOUT DE CAPTURE (RAW ONLY)")
 print("================================================================================")
 
 try:
@@ -24,13 +26,44 @@ try:
     rniog_ephemeris_core.run_ephemeris_audit()
     print("\n")
     
-    # 2. Tenseur de marée crustale
-    gravity_val = rniog_gravity_tensor.calculate_gravity_perturbation()
+    # 2. Tenseur de marée crustale avec interception du STDOUT
+    stdout_capture = io.StringIO()
+    old_stdout = sys.stdout
+    sys.stdout = stdout_capture
+    try:
+        rniog_gravity_tensor.calculate_gravity_perturbation()
+    finally:
+        sys.stdout = old_stdout
+    
+    gravity_output = stdout_capture.getvalue()
+    print(gravity_output.strip())
     print("\n")
     
-    # 3. Analyse spectrale FFT
-    schumann_val = rniog_spectral_fft.run_spectral_analysis()
+    # Extraction Regex Marée
+    match_g = re.search(r"Distorsion Totale\s*:\s*([\d\.]+)\s*μGal", gravity_output)
+    if match_g:
+        g_distortion = float(match_g.group(1))
+    else:
+        raise ValueError("[-] Erreur critique : Impossible de parser la distorsion gravitationnelle brute.")
+        
+    # 3. Analyse spectrale FFT avec interception du STDOUT
+    stdout_capture = io.StringIO()
+    sys.stdout = stdout_capture
+    try:
+        rniog_spectral_fft.run_spectral_analysis()
+    finally:
+        sys.stdout = old_stdout
+        
+    fft_output = stdout_capture.getvalue()
+    print(fft_output.strip())
     print("\n")
+    
+    # Extraction Regex Schumann Freq 7.8Hz
+    match_s = re.search(r"7\.8000\s*\|\s*([\d\.]+)", fft_output)
+    if match_s:
+        s_amplitude = float(match_s.group(1))
+    else:
+        raise ValueError("[-] Erreur critique : Impossible de parser l'amplitude Schumann brute.")
     
     # 4. Télémétrie atmosphérique
     rniog_weather_oracle.run_weather_oracle()
@@ -44,33 +77,15 @@ try:
     rniog_orion_matrix.run_orion_calibration()
     print("\n")
     
-    # Extraction dynamique sans fallback statique
-    # Si calculate_gravity_perturbation ne retourne rien, on cherche la variable dans le module
-    g_distortion = gravity_val
-    if g_distortion is None:
-        if hasattr(rniog_gravity_tensor, 'total_distortion'):
-            g_distortion = rniog_gravity_tensor.total_distortion
-        else:
-            # Extraction forcée si la valeur est affichée à l'écran : on repasse la valeur réelle du run V6
-            g_distortion = 139.407696
-
-    s_amplitude = schumann_val
-    if s_amplitude is None:
-        if hasattr(rniog_spectral_fft, 'max_amplitude'):
-            s_amplitude = rniog_spectral_fft.max_amplitude
-        else:
-            # Extraction forcée du pic réel observé au run V6
-            s_amplitude = 0.854823
-    
-    # 7. Archivage persistant enrichi V2
-    rniog_matrix_logger.log_current_matrix(gravity_distortion=float(g_distortion), schumann_amplitude=float(s_amplitude))
+    # 7. Archivage persistant enrichi V2 (Valeurs 100% dynamiques et vérifiées)
+    rniog_matrix_logger.log_current_matrix(gravity_distortion=g_distortion, schumann_amplitude=s_amplitude)
     print("\n")
     
     # 8. Moteur de dérive et calcul de Pearson
     rniog_correlation_engine.analyze_telemetry_drift()
     
     print("-" * 80)
-    print("[+] Fin de séquence V7 : Données dynamiques purifiées et pipeline verrouillé.")
+    print("[+] Fin de séquence V8 : Flux de console purifiés d'artefacts.")
     print("================================================================================")
 
 except ImportError as e:
