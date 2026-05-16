@@ -4,7 +4,7 @@ import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 print("================================================================================")
-print("🔮 RUN CENTRAL V2 : RÉSEAU NATIONAL INTÉGRÉ D'OBSERVATION GÉOPHYSIQUE (RNIOG)")
+print("🔮 RUN CENTRAL V3 : ARCHITECTURE GLOBALE INTÉGRÉE (RNIOG / K.L.I.S.H.)")
 print("================================================================================")
 
 try:
@@ -13,8 +13,9 @@ try:
     import rniog_spectral_fft
     import rniog_weather_oracle
     import klish_metrology_translator
+    import rniog_orion_matrix
     
-    print("[+] Initialisation de la séquence d'audit global (Physique & Métrologie)...")
+    print("[+] Initialisation de la séquence d'audit global unifiée...")
     print("-" * 80)
     
     # 1. Flux Astrodynamique (NASA DE421)
@@ -35,9 +36,13 @@ try:
     
     # 5. Flux Métrologique Antique (Protocole K.L.I.S.H.)
     klish_metrology_translator.run_klish_metrology()
+    print("\n")
+    
+    # 6. Flux Stellaire Fixe (Référentiel Orion)
+    rniog_orion_matrix.run_orion_calibration()
     
     print("-" * 80)
-    print("[+] Fin de séquence V2 : L'alignement Terre-Ciel-Anciens est consolidé.")
+    print("[+] Fin de séquence V3 : Alignement global verrouillé de manière pérenne.")
     print("================================================================================")
 
 except ImportError as e:
